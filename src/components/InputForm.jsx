@@ -16,7 +16,7 @@ const DATA = [
 
 function InputForm() {
   const [userInput, setUserInput] = useState([]);
-  const inputContainerRef = useRef();
+  const [isLevelComplete, setIsLevelComplete] = useState(false);
   const gameImageChildRef = useRef(); //to call function from GameImage component (ie child component)
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function InputForm() {
 
       //check user input name is correct or not.
       if (answerStr === userInputStr) {
-        alert("correct");
+        setIsLevelComplete(true);
       } else {
         gameImageChildRef.current.shakeImage();
       }
@@ -48,9 +48,9 @@ function InputForm() {
 
   return (
     <>
-      <GameImage ref={gameImageChildRef} />
+      <GameImage ref={gameImageChildRef} isLevelComplete={isLevelComplete} />
       <div className="w-full text-center justify-center flex flex-col items-center mt-[1rem]">
-        <div ref={inputContainerRef} className="flex gap-2 flex-wrap py-6">
+        <div className="flex gap-2 flex-wrap py-6">
           {[...DATA[0].input].map((input, i) => (
             <input
               key={i}
@@ -61,24 +61,30 @@ function InputForm() {
             />
           ))}
         </div>
-        <div className="flex flex-wrap gap-2 max-w-[400px] justify-center">
-          {[...DATA[0].buttons].map((btn, i) => (
-            <button
-              key={i}
-              value={btn}
-              onClick={handleLetterBtn}
-              className="uppercase w-[40px] h-[40px] text-2xl bg-slate-200 rounded-sm curser-pointer shadow-md hover:bg-slate-300 active:bg-slate-400 transation-all ease-in-out duration-300"
-            >
-              {btn}
-            </button>
-          ))}
-          <button
-            onClick={handleDelete}
-            className="uppercase w-[40px] h-[40px] text-2xl bg-slate-300 rounded-sm curser-pointer shadow-md hover:bg-slate-300 active:bg-slate-400 transation-all ease-in-out duration-300"
-          >
-            <i className="fa-solid fa-delete-left"></i>
+        {isLevelComplete ? (
+          <button className="uppercase text-white bg-[#786170] shadow-md text-lg w-[200px] py-2 rounded-3xl my-2 hover:bg-[#675260] active:bg-[#675260] transition-all ease-in-out duration-300">
+            Next
           </button>
-        </div>
+        ) : (
+          <div className="flex flex-wrap gap-2 max-w-[400px] justify-center">
+            {[...DATA[0].buttons].map((btn, i) => (
+              <button
+                key={i}
+                value={btn}
+                onClick={handleLetterBtn}
+                className="uppercase w-[40px] h-[40px] text-2xl bg-slate-200 rounded-sm curser-pointer shadow-md hover:bg-slate-300 active:bg-slate-400 transation-all ease-in-out duration-300"
+              >
+                {btn}
+              </button>
+            ))}
+            <button
+              onClick={handleDelete}
+              className="uppercase w-[40px] h-[40px] text-2xl bg-slate-300 rounded-sm curser-pointer shadow-md hover:bg-slate-300 active:bg-slate-400 transation-all ease-in-out duration-300"
+            >
+              <i className="fa-solid fa-delete-left"></i>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Footer buttons ------------  */}

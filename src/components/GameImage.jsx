@@ -3,8 +3,9 @@ import { useRef, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
 import Naruto from "../assets/gImages/naruto.jpg";
 
-const GameImage = forwardRef((props, ref) => {
+const GameImage = forwardRef(({ isLevelComplete }, ref) => {
   const imageRef = useRef();
+  const imageCoverRef = useRef();
 
   //allow its parent component to call whatever inside is
   useImperativeHandle(ref, () => ({
@@ -15,7 +16,7 @@ const GameImage = forwardRef((props, ref) => {
 
       imgPosition.forEach((position) => {
         setTimeout(() => {
-          imageRef.current.style.transform = `translateX(${position})`;
+          imageCoverRef.current.style.transform = `translateX(${position})`;
           if (position === "30px") imageRef.current.style.opacity = "0.4";
           else imageRef.current.style.opacity = "10";
         }, (timeout += 120));
@@ -25,13 +26,19 @@ const GameImage = forwardRef((props, ref) => {
 
   return (
     <div className="w-full flex justify-center items-center pt-[5rem]">
-      <Image
-        ref={imageRef}
-        src={Naruto}
-        alt="naruto"
-        // onClick={shakeImage}
-        className="object-cover border-3 h-[400px] max-w-[400px] border-[5px] border-black rounded-xl mx-2 transitioin-all ease-in-out duration-300"
-      />
+      <div
+        ref={imageCoverRef}
+        className="h-[400px] max-w-[400px] border-[5px] border-black rounded-xl mx-2 overflow-hidden bg-red-500 transitioin-all ease-in-out duration-300"
+      >
+        <Image
+          ref={imageRef}
+          src={Naruto}
+          alt="naruto"
+          className={`object-cover border-3 h-[400px] w-auto transitioin-all ease-in-out duration-300 ${
+            isLevelComplete ? "scale-100" : "scale-[5]"
+          }`}
+        />
+      </div>
     </div>
   );
 });
