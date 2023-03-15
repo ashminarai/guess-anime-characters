@@ -8,7 +8,7 @@ function GameImage() {
       <Image
         src={Naruto}
         alt="naruto"
-        className="object-cover border-3 h-[400px] w-[400px] border-[5px] border-black rounded-xl"
+        className="object-cover border-3 h-[400px] max-w-[400px] border-[5px] border-black rounded-xl mx-2"
       />
     </div>
   );

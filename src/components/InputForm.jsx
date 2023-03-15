@@ -1,10 +1,11 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import React from "react";
 
 const DATA = [
   {
     input: "naruto",
-    buttons: "hnasdouasdd",
+    buttons: "hnastoruasdd",
   },
   {
     input: "mikasaa",
@@ -13,16 +14,44 @@ const DATA = [
 ];
 
 function InputForm() {
+  const [userInput, setUserInput] = useState([]);
+  const inputContainerRef = useRef();
+
+  useEffect(() => {
+    const checkName = () => {
+      const answerStr = DATA[0].input.toUpperCase();
+      const userInputStr = userInput.join("");
+
+      if (answerStr === userInputStr) {
+        alert("correct");
+      } else {
+        alert("error");
+      }
+    };
+
+    if (userInput.length == DATA[0].input.length) {
+      checkName();
+    }
+  }, [userInput]);
+
+  const handleLetterBtn = (e) => {
+    if (DATA[0].input.length > userInput.length) {
+      setUserInput((uerInput) => [...userInput, e.target.value.toUpperCase()]);
+    }
+  };
+
+  //   console.log(userInput);
+
   return (
     <>
       <div className="w-full text-center justify-center flex flex-col items-center mt-[1rem]">
-        <div className="flex gap-2 flex-wrap py-6">
+        <div ref={inputContainerRef} className="flex gap-2 flex-wrap py-6">
           {[...DATA[0].input].map((input, i) => (
             <input
               key={i}
               type="text"
               disabled
-              value=""
+              value={userInput.length > i ? userInput[i] : ""}
               className="w-[35px] h-[35px] text-center bg-transparent border-b-2 border-white uppercase text-white text-2xl rounded-sm"
             />
           ))}
@@ -31,11 +60,17 @@ function InputForm() {
           {[...DATA[0].buttons].map((btn, i) => (
             <button
               key={i}
+              value={btn}
+              onClick={handleLetterBtn}
               className="uppercase w-[40px] h-[40px] text-2xl bg-slate-200 rounded-sm curser-pointer shadow-md hover:bg-slate-300 active:bg-slate-400 transation-all ease-in-out duration-300"
             >
               {btn}
             </button>
           ))}
+
+          <button className="uppercase w-[40px] h-[40px] text-2xl bg-slate-200 rounded-sm curser-pointer shadow-md hover:bg-slate-300 active:bg-slate-400 transation-all ease-in-out duration-300">
+            <i class="fa-solid fa-delete-left"></i>
+          </button>
         </div>
       </div>
       <div className="text-center flex justify-center items-center gap-10 mt-[40px]">

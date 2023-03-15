@@ -14,7 +14,7 @@ function Header() {
         </div>
         <div className="relative flex flex-col items-start justify-center">
           <div className="text-[#FFEE58] bg-[#3d3346] h-[40px] w-[40px] rounded-full border-2 border-white flex items-center justify-center absolute right-0">
-            <i className="fa-solid fa-bitcoin-sign"></i>
+            <i className="fa-brands fa-bitcoin"></i>
           </div>
           <div className="w-20 bg-white rounded-3xl flex justify-start items-center py-[2px] px-3">
             <p className="font-semibold">15</p>

@@ -22,17 +22,16 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Guess Anime Character
 
-To learn more about Next.js, take a look at the following resources:
+Guess Anime Character is a simple game where users has to guess the name of a anime character.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Game features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Zoomed image of a character will be display and a user have to guess the name.
+- Guessing correct name will give +2 coins.
+- Hint option is availabe to help you guess the name. However, it will cost +5 coins for each hint.
+- Currently, the game has more than 15 levels. (more levels will be added later).
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you are fan of anime, go through the link and find out how many you can recongnize.
+Enjoy the game. Have a great day 👋.
