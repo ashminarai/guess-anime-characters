@@ -8,6 +8,7 @@
   box-sizing: border-box;
 }
 
+.play-page-bg,
 .home-section {
   background: rgb(120, 97, 112);
   background: linear-gradient(
