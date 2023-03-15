@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import GameImage from "./GameImage";
 
 const DATA = [
   {
@@ -16,34 +17,38 @@ const DATA = [
 function InputForm() {
   const [userInput, setUserInput] = useState([]);
   const inputContainerRef = useRef();
+  const gameImageChildRef = useRef(); //to call function from GameImage component (ie child component)
 
   useEffect(() => {
-    const checkName = () => {
+    //if user input fields are all field
+    if (userInput.length == DATA[0].input.length) {
       const answerStr = DATA[0].input.toUpperCase();
-      const userInputStr = userInput.join("");
+      const userInputStr = userInput.join(""); //convert userInput array to string
 
+      //check user input name is correct or not.
       if (answerStr === userInputStr) {
         alert("correct");
       } else {
-        alert("error");
+        gameImageChildRef.current.shakeImage();
       }
-    };
-
-    if (userInput.length == DATA[0].input.length) {
-      checkName();
     }
   }, [userInput]);
 
   const handleLetterBtn = (e) => {
+    //if user input field is empty
     if (DATA[0].input.length > userInput.length) {
       setUserInput((uerInput) => [...userInput, e.target.value.toUpperCase()]);
     }
   };
 
-  //   console.log(userInput);
+  // to remove last letter from user inputs
+  const handleDelete = (e) => {
+    setUserInput((prevUserInput) => prevUserInput.slice(0, -1)); //remove last items from array.
+  };
 
   return (
     <>
+      <GameImage ref={gameImageChildRef} />
       <div className="w-full text-center justify-center flex flex-col items-center mt-[1rem]">
         <div ref={inputContainerRef} className="flex gap-2 flex-wrap py-6">
           {[...DATA[0].input].map((input, i) => (
@@ -67,14 +72,21 @@ function InputForm() {
               {btn}
             </button>
           ))}
-
-          <button className="uppercase w-[40px] h-[40px] text-2xl bg-slate-200 rounded-sm curser-pointer shadow-md hover:bg-slate-300 active:bg-slate-400 transation-all ease-in-out duration-300">
-            <i class="fa-solid fa-delete-left"></i>
+          <button
+            onClick={handleDelete}
+            className="uppercase w-[40px] h-[40px] text-2xl bg-slate-300 rounded-sm curser-pointer shadow-md hover:bg-slate-300 active:bg-slate-400 transation-all ease-in-out duration-300"
+          >
+            <i className="fa-solid fa-delete-left"></i>
           </button>
         </div>
       </div>
+
+      {/* Footer buttons ------------  */}
       <div className="text-center flex justify-center items-center gap-10 mt-[40px]">
-        <button className="text-[#e0dbdb] bg-[#786170] h-[45px] w-[45px] rounded-full shadow-md flex justify-center items-center text-2xl hover:bg-[#675260] active:bg-[#675260] transition-all ease-in-out duration-300">
+        <button
+          onClick={() => console.log("back")}
+          className="text-[#e0dbdb] bg-[#786170] h-[45px] w-[45px] rounded-full shadow-md flex justify-center items-center text-2xl hover:bg-[#675260] active:bg-[#675260] transition-all ease-in-out duration-300"
+        >
           <i className="fa-solid fa-backward"></i>
         </button>
         <Link href="/">
