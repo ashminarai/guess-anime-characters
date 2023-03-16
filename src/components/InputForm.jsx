@@ -5,7 +5,7 @@ import GameImage from "./GameImage";
 import { LEVELS } from "@/assets/data";
 
 import { useDispatch, useSelector } from "react-redux";
-import { decreaseCoin } from "@/redux/slice/userSlice";
+import { nextLevel, decreaseCoin } from "@/redux/slice/userSlice";
 
 function InputForm() {
   const [userInput, setUserInput] = useState([]);
@@ -43,6 +43,13 @@ function InputForm() {
     setUserInput((prevUserInput) => prevUserInput.slice(0, -1)); //remove last items from array.
   };
 
+  //move to next level
+  const handleNext = () => {
+    setIsLevelComplete(false);
+    setUserInput([]);
+    dispatch(nextLevel());
+  };
+
   //to give hint
   const handleHint = () => {
     //to check user hints
@@ -71,7 +78,11 @@ function InputForm() {
 
   return (
     <>
-      <GameImage ref={gameImageChildRef} isLevelComplete={isLevelComplete} />
+      <GameImage
+        ref={gameImageChildRef}
+        isLevelComplete={isLevelComplete}
+        image={LEVELS[level - 1].image}
+      />
       <div className="w-full text-center justify-center flex flex-col items-center mt-[1rem]">
         <div className="flex gap-2 flex-wrap py-6">
           {[...LEVELS[level - 1].name].map((input, i) => (
@@ -85,7 +96,10 @@ function InputForm() {
           ))}
         </div>
         {isLevelComplete ? (
-          <button className="uppercase text-white bg-[#786170] shadow-md text-lg w-[200px] py-2 rounded-3xl my-2 hover:bg-[#675260] active:bg-[#675260] transition-all ease-in-out duration-300">
+          <button
+            onClick={handleNext}
+            className="uppercase text-white bg-[#786170] shadow-md text-lg w-[200px] py-2 rounded-3xl my-2 hover:bg-[#675260] active:bg-[#675260] transition-all ease-in-out duration-300"
+          >
             Next
           </button>
         ) : (

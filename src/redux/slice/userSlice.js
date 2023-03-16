@@ -12,9 +12,11 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     //nextLevel
-    nextLevel: (state, action) => {
-      state.level = action.payload.userLevel + 1;
-      state.score = action.payload.coin + 2;
+    nextLevel: (state) => {
+      //   state.level = action.payload.userLevel + 1;
+      //   state.score = action.payload.coin + 2;
+      state.level += 1;
+      state.coin += 2;
     },
     //reduce coin
     decreaseCoin: (state) => {

@@ -1,9 +1,8 @@
 "use client";
 import { useRef, forwardRef, useImperativeHandle } from "react";
 import Image from "next/image";
-import Naruto from "../assets/gImages/naruto.jpg";
 
-const GameImage = forwardRef(({ isLevelComplete }, ref) => {
+const GameImage = forwardRef(({ isLevelComplete, image }, ref) => {
   const imageRef = useRef();
   const imageCoverRef = useRef();
 
@@ -32,7 +31,7 @@ const GameImage = forwardRef(({ isLevelComplete }, ref) => {
       >
         <Image
           ref={imageRef}
-          src={Naruto}
+          src={image}
           alt="naruto"
           className={`object-cover border-3 h-[400px] w-auto transitioin-all ease-in-out duration-300 ${
             isLevelComplete ? "scale-100" : "scale-[5]"
