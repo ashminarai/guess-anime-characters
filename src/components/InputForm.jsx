@@ -2,17 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import GameImage from "./GameImage";
-
-const DATA = [
-  {
-    input: "naruto",
-    buttons: "hnastoruasdd",
-  },
-  {
-    input: "mikasaa",
-    buttons: "hnaasdads",
-  },
-];
+import { LEVELS } from "@/assets/data";
 
 function InputForm() {
   const [userInput, setUserInput] = useState([]);
@@ -21,8 +11,8 @@ function InputForm() {
 
   useEffect(() => {
     //if user input fields are all field
-    if (userInput.length == DATA[0].input.length) {
-      const answerStr = DATA[0].input.toUpperCase();
+    if (userInput.length == LEVELS[0].name.length) {
+      const answerStr = LEVELS[0].name.toUpperCase();
       const userInputStr = userInput.join(""); //convert userInput array to string
 
       //check user input name is correct or not.
@@ -36,7 +26,7 @@ function InputForm() {
 
   const handleLetterBtn = (e) => {
     //if user input field is empty
-    if (DATA[0].input.length > userInput.length) {
+    if (LEVELS[0].name.length > userInput.length) {
       setUserInput((uerInput) => [...userInput, e.target.value.toUpperCase()]);
     }
   };
@@ -51,7 +41,7 @@ function InputForm() {
       <GameImage ref={gameImageChildRef} isLevelComplete={isLevelComplete} />
       <div className="w-full text-center justify-center flex flex-col items-center mt-[1rem]">
         <div className="flex gap-2 flex-wrap py-6">
-          {[...DATA[0].input].map((input, i) => (
+          {[...LEVELS[0].name].map((input, i) => (
             <input
               key={i}
               type="text"
@@ -67,7 +57,7 @@ function InputForm() {
           </button>
         ) : (
           <div className="flex flex-wrap gap-2 max-w-[400px] justify-center">
-            {[...DATA[0].buttons].map((btn, i) => (
+            {[...LEVELS[0].buttons].map((btn, i) => (
               <button
                 key={i}
                 value={btn}
