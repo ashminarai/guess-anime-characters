@@ -5,13 +5,16 @@ import GameImage from "./GameImage";
 import { LEVELS } from "@/assets/data";
 
 import { useDispatch, useSelector } from "react-redux";
+import { decreaseCoin } from "@/redux/slice/userSlice";
 
 function InputForm() {
   const [userInput, setUserInput] = useState([]);
   const [isLevelComplete, setIsLevelComplete] = useState(false);
   const gameImageChildRef = useRef(); //to call function from GameImage component (ie child component)
 
-  const level = useSelector((state) => state.level);
+  const { level, coin } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const correctName = LEVELS[level - 1].name.toUpperCase();
 
   useEffect(() => {
     //if user input fields are all field
@@ -38,6 +41,32 @@ function InputForm() {
   // to remove last letter from user inputs
   const handleDelete = (e) => {
     setUserInput((prevUserInput) => prevUserInput.slice(0, -1)); //remove last items from array.
+  };
+
+  //to give hint
+  const handleHint = () => {
+    //to check user hints
+    if (Math.trunc(coin / 5) >= 1) {
+      let copyUserInput = [];
+      let isUserInputMatched = true;
+
+      dispatch(decreaseCoin());
+
+      userInput.every((input, index) => {
+        if (input === correctName[index]) {
+          copyUserInput.push(input);
+          return true;
+        } else {
+          copyUserInput.push(correctName[index]);
+          setUserInput(copyUserInput);
+          isUserInputMatched = false;
+          return false;
+        }
+      });
+
+      if (isUserInputMatched)
+        setUserInput([...userInput, correctName[userInput.length]]);
+    }
   };
 
   return (
@@ -94,10 +123,13 @@ function InputForm() {
             <i className="fa-sharp fa-solid fa-house"></i>
           </button>
         </Link>
-        <button className="text-[#e0dbdb] bg-[#786170] h-[45px] w-[45px] rounded-full shadow-md flex justify-center items-center text-2xl hover:bg-[#675260] active:bg-[#675260] transition-all ease-in-out duration-300 relative">
+        <button
+          onClick={handleHint}
+          className="text-[#e0dbdb] bg-[#786170] h-[45px] w-[45px] rounded-full shadow-md flex justify-center items-center text-2xl hover:bg-[#675260] active:bg-[#675260] transition-all ease-in-out duration-300 relative"
+        >
           <i className="fa-solid fa-lightbulb"></i>
           <p className="text-[#2D1C3D] absolute right-[-12px] bottom-[0px] text-[20px] font-semibold bg-[#ffff00] h-[25px] w-[25px] flex items-center justify-center rounded-full">
-            3
+            {Math.trunc(coin / 5)}
           </p>
         </button>
       </div>

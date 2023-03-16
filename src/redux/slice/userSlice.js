@@ -17,14 +17,14 @@ const userSlice = createSlice({
       state.score = action.payload.coin + 2;
     },
     //reduce coin
-    decreaseCoin: (state, action) => {
-      state.coin = action.payload - 5;
+    decreaseCoin: (state) => {
+      state.coin -= 5;
     },
   },
 });
 
 //generate action
-const { nextLevel, decreaseCoin } = userSlice.actions;
+export const { nextLevel, decreaseCoin } = userSlice.actions;
 
 //generate reducers
 const userReducer = userSlice.reducer;
