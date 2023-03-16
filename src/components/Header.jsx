@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 // dispatch(fetchSearchPost(search));
 
 function Header() {
-  const { level, coin } = useSelector((state) => state);
+  const { level, coin, isContinue, newLevel } = useSelector((state) => state);
 
   return (
     <header className="fixed top-0 w-[100vw] py-2">
@@ -14,7 +14,7 @@ function Header() {
             <i className="fa-regular fa-star"></i>
           </div>
           <div className="w-20 bg-white rounded-3xl flex justify-end items-center py-[2px] px-3">
-            <p className="font-semibold">{level}</p>
+            <p className="font-semibold">{isContinue ? level : newLevel}</p>
           </div>
         </div>
         <div className="relative flex flex-col items-start justify-center">

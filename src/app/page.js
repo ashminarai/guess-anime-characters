@@ -1,5 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  changeContinue,
+  updateLatestLevel,
+  updateNewLevel,
+} from "@/redux/slice/userSlice";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "../components/Header";
@@ -8,7 +14,22 @@ import Itachi from "../assets/images/h-itachi.png";
 import Mikasa from "../assets/images/h-mikasa.png";
 
 export default function Home() {
-  const [isContinue, setIsContinue] = useState(false);
+  const [user, setUser] = useState();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changeContinue(true));
+    dispatch(updateNewLevel("reset"));
+
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (userData) {
+      setUser([userData]);
+    }
+  }, []);
+
+  if (user) {
+    dispatch(updateLatestLevel({ level: user[0].level, coin: user[0].coin }));
+  }
 
   return (
     <main className="home-section min-h-[100vh] [w-[100vw] relative">
@@ -36,13 +57,16 @@ export default function Home() {
         </div>
         <div className="h-[200px] flex flex-col items-center justify-center gap-8">
           <Link href="/play">
-            <button className="cursor-pointer bg-[#93474C] w-[200px] uppercase font-semibold text-lg py-1 rounded-3xl shadow-md border-2 border-[#f2e5e5] text-white hover:bg-[#75383c] transition-all ease-in-out duration-300 active:bg-[#75383c]">
-              Play
+            <button
+              onClick={() => dispatch(changeContinue(false))}
+              className="cursor-pointer bg-[#93474C] w-[200px] uppercase font-semibold text-lg py-1 rounded-3xl shadow-md  text-white hover:bg-[#75383c] transition-all ease-in-out duration-300 active:bg-[#75383c]"
+            >
+              {user && user[0].level > 1 ? "New Game" : "Play"}
             </button>
           </Link>
-          {isContinue && (
+          {user && user[0].level > 1 && (
             <Link href="/play">
-              <button className="cursor-pointer bg-[#5458c1] w-[200px] uppercase font-semibold text-lg py-1 rounded-3xl shadow-md border-2 border-[#f2e5e5] text-white hover:bg-[#474aa0] transition-all ease-in-out duration-300 active:bg-[#474aa0]">
+              <button className="cursor-pointer bg-[#5458c1] w-[200px] uppercase font-semibold text-lg py-1 rounded-3xl shadow-md  text-white hover:bg-[#474aa0] transition-all ease-in-out duration-300 active:bg-[#474aa0]">
                 Continue
               </button>
             </Link>

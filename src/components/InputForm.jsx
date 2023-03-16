@@ -5,21 +5,27 @@ import GameImage from "./GameImage";
 import { LEVELS } from "@/assets/data";
 
 import { useDispatch, useSelector } from "react-redux";
-import { nextLevel, decreaseCoin } from "@/redux/slice/userSlice";
+import {
+  nextLevel,
+  decreaseCoin,
+  updateNewLevel,
+} from "@/redux/slice/userSlice";
 
 function InputForm() {
   const [userInput, setUserInput] = useState([]);
   const [isLevelComplete, setIsLevelComplete] = useState(false);
   const gameImageChildRef = useRef(); //to call function from GameImage component (ie child component)
+  const [currentLevel, setCurrentLevel] = useState(1);
 
-  const { level, coin } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const correctName = LEVELS[level - 1].name.toUpperCase();
+  const { level, coin, isContinue, newLevel } = useSelector((state) => state);
+
+  const correctName = LEVELS[currentLevel - 1].name.toUpperCase();
 
   useEffect(() => {
     //if user input fields are all field
-    if (userInput.length == LEVELS[level - 1].name.length) {
-      const answerStr = LEVELS[level - 1].name.toUpperCase();
+    if (userInput.length == LEVELS[currentLevel - 1].name.length) {
+      const answerStr = LEVELS[currentLevel - 1].name.toUpperCase();
       const userInputStr = userInput.join(""); //convert userInput array to string
 
       //check user input name is correct or not.
@@ -29,11 +35,17 @@ function InputForm() {
         gameImageChildRef.current.shakeImage();
       }
     }
+
+    if (isContinue) {
+      setCurrentLevel(level);
+    } else {
+      setCurrentLevel(newLevel);
+    }
   }, [userInput]);
 
   const handleLetterBtn = (e) => {
     //if user input field is empty
-    if (LEVELS[level - 1].name.length > userInput.length) {
+    if (LEVELS[currentLevel - 1].name.length > userInput.length) {
       setUserInput((uerInput) => [...userInput, e.target.value.toUpperCase()]);
     }
   };
@@ -47,7 +59,16 @@ function InputForm() {
   const handleNext = () => {
     setIsLevelComplete(false);
     setUserInput([]);
-    dispatch(nextLevel());
+    if (currentLevel >= level) {
+      dispatch(nextLevel());
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ level: level + 1, coin: coin + 2 })
+      );
+      return;
+    }
+
+    dispatch(updateNewLevel("next"));
   };
 
   //to give hint
@@ -81,11 +102,11 @@ function InputForm() {
       <GameImage
         ref={gameImageChildRef}
         isLevelComplete={isLevelComplete}
-        image={LEVELS[level - 1].image}
+        image={LEVELS[currentLevel - 1].image}
       />
       <div className="w-full text-center justify-center flex flex-col items-center mt-[1rem]">
         <div className="flex gap-2 flex-wrap py-6">
-          {[...LEVELS[level - 1].name].map((input, i) => (
+          {[...LEVELS[currentLevel - 1].name].map((input, i) => (
             <input
               key={i}
               type="text"
@@ -104,7 +125,7 @@ function InputForm() {
           </button>
         ) : (
           <div className="flex flex-wrap gap-2 max-w-[400px] justify-center">
-            {[...LEVELS[level - 1].buttons].map((btn, i) => (
+            {[...LEVELS[currentLevel - 1].buttons].map((btn, i) => (
               <button
                 key={i}
                 value={btn}
