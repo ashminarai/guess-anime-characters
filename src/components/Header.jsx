@@ -1,6 +1,11 @@
+"use client";
 import React from "react";
+import { useSelector } from "react-redux";
+// dispatch(fetchSearchPost(search));
 
 function Header() {
+  const { level, coin } = useSelector((state) => state);
+
   return (
     <header className="fixed top-0 w-[100vw] py-2">
       <div className="max-w-7xl flex h-20 justify-between items-center m-auto text-xl px-4">
@@ -9,7 +14,7 @@ function Header() {
             <i className="fa-regular fa-star"></i>
           </div>
           <div className="w-20 bg-white rounded-3xl flex justify-end items-center py-[2px] px-3">
-            <p className="font-semibold">1</p>
+            <p className="font-semibold">{level}</p>
           </div>
         </div>
         <div className="relative flex flex-col items-start justify-center">
@@ -17,7 +22,7 @@ function Header() {
             <i className="fa-brands fa-bitcoin"></i>
           </div>
           <div className="w-20 bg-white rounded-3xl flex justify-start items-center py-[2px] px-3">
-            <p className="font-semibold">15</p>
+            <p className="font-semibold">{coin}</p>
           </div>
         </div>
       </div>

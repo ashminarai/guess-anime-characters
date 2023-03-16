@@ -4,15 +4,19 @@ import Link from "next/link";
 import GameImage from "./GameImage";
 import { LEVELS } from "@/assets/data";
 
+import { useDispatch, useSelector } from "react-redux";
+
 function InputForm() {
   const [userInput, setUserInput] = useState([]);
   const [isLevelComplete, setIsLevelComplete] = useState(false);
   const gameImageChildRef = useRef(); //to call function from GameImage component (ie child component)
 
+  const level = useSelector((state) => state.level);
+
   useEffect(() => {
     //if user input fields are all field
-    if (userInput.length == LEVELS[0].name.length) {
-      const answerStr = LEVELS[0].name.toUpperCase();
+    if (userInput.length == LEVELS[level - 1].name.length) {
+      const answerStr = LEVELS[level - 1].name.toUpperCase();
       const userInputStr = userInput.join(""); //convert userInput array to string
 
       //check user input name is correct or not.
@@ -26,7 +30,7 @@ function InputForm() {
 
   const handleLetterBtn = (e) => {
     //if user input field is empty
-    if (LEVELS[0].name.length > userInput.length) {
+    if (LEVELS[level - 1].name.length > userInput.length) {
       setUserInput((uerInput) => [...userInput, e.target.value.toUpperCase()]);
     }
   };
@@ -41,7 +45,7 @@ function InputForm() {
       <GameImage ref={gameImageChildRef} isLevelComplete={isLevelComplete} />
       <div className="w-full text-center justify-center flex flex-col items-center mt-[1rem]">
         <div className="flex gap-2 flex-wrap py-6">
-          {[...LEVELS[0].name].map((input, i) => (
+          {[...LEVELS[level - 1].name].map((input, i) => (
             <input
               key={i}
               type="text"
@@ -57,7 +61,7 @@ function InputForm() {
           </button>
         ) : (
           <div className="flex flex-wrap gap-2 max-w-[400px] justify-center">
-            {[...LEVELS[0].buttons].map((btn, i) => (
+            {[...LEVELS[level - 1].buttons].map((btn, i) => (
               <button
                 key={i}
                 value={btn}

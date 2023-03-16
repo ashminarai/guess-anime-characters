@@ -1,6 +1,9 @@
+"use client";
+
 import "./globals.css";
-import Head from "next/head";
 import Script from "next/script";
+import { Provider } from "react-redux";
+import store from "@/redux/store/store";
 
 export const metadata = {
   title: "Guess Character",
@@ -14,7 +17,9 @@ export default function RootLayout({ children }) {
         src="https://kit.fontawesome.com/92ebd06eb0.js"
         crossorigin="anonymous"
       ></Script>
-      <body>{children}</body>
+      <body>
+        <Provider store={store}>{children}</Provider>
+      </body>
     </html>
   );
 }
