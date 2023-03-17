@@ -36,8 +36,9 @@ const userSlice = createSlice({
     updateNewLevel: (state, action) => {
       if (action.payload === "reset") {
         state.newLevel = 1;
-      } else if (action.payload === "previous") {
-        state.newLevel -= 1;
+      } else if (action.payload.type === "previous") {
+        state.newLevel = action.payload.newLevel;
+        state.isContinue = false;
       } else if (action.payload === "next") {
         state.newLevel += 1;
       }

@@ -68,7 +68,7 @@ function InputForm() {
       return;
     }
 
-    dispatch(updateNewLevel("next"));
+    dispatch(updateNewLevel("next")); //if new game is selected
   };
 
   //to give hint
@@ -94,6 +94,16 @@ function InputForm() {
 
       if (isUserInputMatched)
         setUserInput([...userInput, correctName[userInput.length]]);
+    }
+  };
+
+  //move to previous level
+  const handleBack = () => {
+    if (currentLevel > 1) {
+      dispatch(
+        updateNewLevel({ type: "previous", newLevel: currentLevel - 1 })
+      );
+      setCurrentLevel((prevCurrentLevel) => prevCurrentLevel - 1);
     }
   };
 
@@ -148,7 +158,7 @@ function InputForm() {
       {/* Footer buttons ------------  */}
       <div className="text-center flex justify-center items-center gap-10 mt-[40px]">
         <button
-          onClick={() => console.log("back")}
+          onClick={handleBack}
           className="text-[#e0dbdb] bg-[#786170] h-[45px] w-[45px] rounded-full shadow-md flex justify-center items-center text-2xl hover:bg-[#675260] active:bg-[#675260] transition-all ease-in-out duration-300"
         >
           <i className="fa-solid fa-backward"></i>
