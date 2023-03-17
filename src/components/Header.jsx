@@ -7,7 +7,7 @@ function Header() {
   const { level, coin, isContinue, newLevel } = useSelector((state) => state);
 
   return (
-    <header className="fixed top-0 w-[100vw] py-2">
+    <header className="fixed top-0 w-[100vw] py-2 z-5">
       <div className="max-w-7xl flex h-20 justify-between items-center m-auto text-xl px-4">
         <div className="relative flex flex-col items-start justify-center">
           <div className="text-[#FFEE58] bg-[#3d3346] h-[40px] w-[40px] rounded-full border-2 border-white flex items-center justify-center absolute">

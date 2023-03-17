@@ -18,3 +18,20 @@
     rgba(45, 28, 61, 1) 100%
   );
 }
+
+.up-down-animation {
+  animation-duration: 0.5s;
+  animation-name: up-down;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  transition-timing-function: ease-in-out;
+}
+
+@keyframes up-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}

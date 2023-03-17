@@ -6,6 +6,7 @@ const initialState = {
   coin: 15,
   isContinue: true,
   newLevel: 1,
+  userGuide: true,
 };
 
 //create slice
@@ -43,6 +44,10 @@ const userSlice = createSlice({
         state.newLevel += 1;
       }
     },
+    //change user guide
+    hideUserGuide: (state) => {
+      state.userGuide = false;
+    },
   },
 });
 
@@ -53,6 +58,7 @@ export const {
   changeContinue,
   updateLatestLevel,
   updateNewLevel,
+  hideUserGuide,
 } = userSlice.actions;
 
 //generate reducers
