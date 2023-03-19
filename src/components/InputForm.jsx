@@ -59,10 +59,6 @@ function InputForm() {
   const handleNext = () => {
     setIsLevelComplete(false);
     setUserInput([]);
-    if (currentLeve >= 16) {
-      return;
-    }
-
     if (currentLevel >= level) {
       dispatch(nextLevel());
       localStorage.setItem(
