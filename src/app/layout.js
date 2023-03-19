@@ -1,9 +1,5 @@
-"use client";
-
 import "./globals.css";
-import Script from "next/script";
-import { Provider } from "react-redux";
-import store from "@/redux/store/store";
+import Providers from "./Provider";
 
 export const metadata = {
   title: "Guess Character",
@@ -14,7 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Provider store={store}>{children}</Provider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
