@@ -233,4 +233,10 @@ export const LEVELS = [
     buttons: "OTOASBIR",
     image: Obito,
   },
+  {
+    level: 34,
+    name: "naruto",
+    buttons: "OTURANUUGKHA",
+    image: Naruto,
+  }
 ];
