@@ -1,4 +1,4 @@
-# 🎮 Anime Character Guessing Game Readme
+# 🎮 Anime Character Guessing Game
 
 ## Introduction
 
